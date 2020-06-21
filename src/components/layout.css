@@ -8,3 +8,26 @@ h1 {
   color: #757575;
   text-transform: capitalize;
 }
+
+.images {
+  text-align: center;
+  text-transform: capitalize;
+  width: 80vw;
+  margin: 0 auto 10rem auto;
+}
+
+.single-image {
+  border: 1px solid blue;
+  padding: 1rem 0;
+}
+
+@media screen and (min-width: 992px) {
+  .images {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.small {
+  width: 100px;
+}

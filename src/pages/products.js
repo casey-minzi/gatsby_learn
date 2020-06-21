@@ -1,23 +1,54 @@
-import React, { Component } from "react"
+import React from "react"
 import Layout from "../components/layout"
+import styles from "../components/products.module.css"
+import Image from "gatsby-image"
+import { Link } from "gatsby"
+import styled from "styled-components"
 
-export default class products extends Component {
-  render() {
-    return (
-      <Layout>
-        <h1>This is our products</h1>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a
-          eros at lacus scelerisque tempus. Aenean malesuada quam sit amet nulla
-          tincidunt, non luctus enim rutrum. Phasellus fringilla pellentesque
-          dui, fringilla porta leo tempor ac. Nulla vel faucibus purus, vitae
-          rhoncus sapien. Orci varius natoque penatibus et magnis dis parturient
-          montes, nascetur ridiculus mus. Nullam nec nunc non augue tempor
-          lacinia at sollicitudin metus. Etiam in nisl a enim lacinia bibendum
-          at nec sem. Morbi porttitor finibus lorem at cursus. Nulla vel nulla
-          congue, auctor ligula vitae, pharetra tortor.
-        </p>
-      </Layout>
-    )
-  }
+const ImageContainer = styled.div`
+  width: 250px;
+`
+
+const products = ({ data }) => {
+  const {
+    allContentfulProduct: { nodes: products },
+  } = data
+
+  return (
+    <Layout>
+      <section className={styles.page}>
+        {products.map(product => (
+          <article key={product.id}>
+            <ImageContainer>
+              <Image fluid={product.image.fluid} alt={product.title} />
+            </ImageContainer>
+            <h3>
+              {product.title} <span>£{product.price}</span>
+            </h3>
+            <Link to={`/products/${product.slug}`}>more details</Link>
+          </article>
+        ))}
+      </section>
+    </Layout>
+  )
 }
+
+export default products
+
+export const query = graphql`
+  {
+    allContentfulProduct {
+      nodes {
+        title
+        price
+        id
+        image {
+          fluid {
+            ...GatsbyContentfulFluid
+          }
+        }
+        slug
+      }
+    }
+  }
+`

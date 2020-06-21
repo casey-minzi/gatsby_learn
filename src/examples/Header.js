@@ -21,9 +21,9 @@ const Header = () => {
 export default Header
 
 const getData = graphql`
-  {
+  query FirstQuery {
     site {
-      info:siteMetadata {
+      info: siteMetadata {
         title
         description
         author
